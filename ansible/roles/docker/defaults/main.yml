@@ -1,3 +1,11 @@
 ---
 # defaults file for docker
-admin_user: "adminfabio"
+packages_required:
+  - dnf-plugins-core
+  - git
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+  - vim

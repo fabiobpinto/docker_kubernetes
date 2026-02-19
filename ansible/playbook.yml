@@ -1,8 +1,10 @@
 ---
 - name: Playbook
-  hosts: 
+  hosts:
     - vms_linux
-  roles: 
-  - docker
+  roles:
+    - docker
+  gather_facts: false
+  strategy: free
 
 ...

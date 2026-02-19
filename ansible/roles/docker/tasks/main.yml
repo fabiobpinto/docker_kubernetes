@@ -1,5 +1,68 @@
 ---
 # tasks file for docker
+- name: Install plugins
+  ansible.builtin.dnf:
+    name: "{{ packages_required }}"
+    state: present
 
-- include_tasks: yum.yml
-  when: ansible_os_family == "RedHat"
+- name: Add Docker repository
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/rhel/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0644'
+    force: no
+
+- name: Enable and start Docker
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: started
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+
+- name: Create Docker directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/docker_labs"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: SSH key setup
+  ansible.builtin.copy:
+    src: files/admin_real
+    dest: /home/{{ ansible_user }}/.ssh/admin_real
+    mode: '0600'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Copy SSH config
+  ansible.builtin.copy:
+    src: files/ssh_config
+    dest: /home/{{ ansible_user }}/.ssh/config
+    mode: '0644'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Clone repository
+  ansible.builtin.git:
+    repo: git@github.com:fabiobpinto/docker_labs.git
+    dest: /home/{{ ansible_user }}/docker_labs
+    key_file: /home/{{ ansible_user }}/.ssh/admin_real
+    version: main
+    accept_hostkey: yes
+    update: yes
+    force: yes
+
+- name: Fix ownership of docker_labs directory
+  ansible.builtin.file:
+    path: /home/{{ ansible_user }}/docker_labs
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+...

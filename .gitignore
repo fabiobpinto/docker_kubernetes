@@ -37,3 +37,4 @@ override.tf.json
 terraform.rc
 ansible/logs/*
 ansible/roles/docker/tests/inventory
+ansible/roles/docker/files/admin_real
