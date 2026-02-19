@@ -1,0 +1,5 @@
+---
+# tasks file for docker
+
+- include_tasks: yum.yml
+  when: ansible_os_family == "RedHat"

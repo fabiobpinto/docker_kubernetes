@@ -1,0 +1,65 @@
+---
+# tasks file for docker
+- name: Install DNF plugins
+  ansible.builtin.dnf:
+    name: dnf-plugins-core
+    state: present
+
+- name: Install Git
+  ansible.builtin.dnf:
+    name: git
+    state: present
+
+
+- name: Add Docker repository
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/rhel/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0644'
+
+
+- name: Install Docker packages
+  ansible.builtin.dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+
+
+- name: Enable and start Docker
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: started
+
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+
+- name: Create Docker directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/docker_labs"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: Clone repository
+  ansible.builtin.git:
+    repo: git@github.com:fabiobpinto/docker_labs.git
+    dest: /home/{{ ansible_user }}/docker_labs
+    key_file: /home/{{ ansible_user }}/.ssh/admin_real
+    accept_hostkey: yes
+
+- name: Fix ownership of docker_labs directory
+  ansible.builtin.shell: |
+    chown -R {{ ansible_user }}:{{ ansible_user }} /home/{{ ansible_user }}/docker_labs
+    chmod -R 755 /home/{{ ansible_user }}/docker_labs
+
+...

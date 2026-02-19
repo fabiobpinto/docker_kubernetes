@@ -1,0 +1,8 @@
+---
+- name: Playbook
+  hosts: 
+    - vms_linux
+  roles: 
+  - docker
+
+...
