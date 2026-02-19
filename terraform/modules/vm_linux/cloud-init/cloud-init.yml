@@ -1,0 +1,21 @@
+#cloud-config
+package_update: true
+
+timezone: America/Sao_Paulo
+
+packages:
+  - python3
+  - unzip
+  - tar
+
+users:
+  - default
+  - name: useransible
+    gecos: User Ansible
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGiftpR8WLYW8UQ2EMeCLS4sc0Zwucwoh0KE2lWm0rTr useransible
+
+# ssh_pwauth: false --- IGNORE --- Disable password authentication
+disable_root: true
