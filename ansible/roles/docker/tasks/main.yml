@@ -32,6 +32,17 @@
     group: "{{ ansible_user }}"
     mode: '0755'
 
+- name: Enable Docker bash completion
+  ansible.builtin.lineinfile:
+    path: ~/.bashrc
+    line: source /usr/share/bash-completion/completions/docker
+    create: yes
+
+- name: Reload bashrc in the current session
+  ansible.builtin.shell: source ~/.bashrc
+  args:
+    executable: /bin/bash
+
 - name: SSH key setup
   ansible.builtin.copy:
     src: files/admin_real
