@@ -1,0 +1,11 @@
+FROM node:18
+WORKDIR /app
+COPY app/package*.json ./
+RUN npm ci
+COPY app/ .
+RUN chown -R node:node /app
+USER node
+ENV NODE_ENV=production
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s \
+  CMD node -e "require('http').get('http://localhost:3000', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
+CMD ["npm", "start"]

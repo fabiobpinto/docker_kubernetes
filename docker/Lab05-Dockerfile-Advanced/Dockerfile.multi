@@ -1,0 +1,16 @@
+FROM node:18 AS builder
+WORKDIR /app
+COPY app/package*.json ./
+RUN npm ci
+COPY app/ .
+
+### Produção
+FROM node:18-slim
+WORKDIR /app
+COPY --from=builder /app /app
+RUN chown -R node:node /app
+USER node
+ENV NODE_ENV=production
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s \
+  CMD node -e "require('http').get('http://localhost:3000', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
+CMD ["node", "index.js"]
