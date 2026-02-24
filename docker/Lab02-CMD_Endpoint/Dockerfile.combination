@@ -1,0 +1,7 @@
+FROM alpine
+
+COPY hello.sh /hello.sh
+
+ENTRYPOINT ["/hello.sh"]
+
+CMD ["Mensagem padrão com ENTRYPOINT + CMD"]
