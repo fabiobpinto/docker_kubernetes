@@ -42,6 +42,12 @@ nsg_rules = {
       destination_port_range = "8080"
     },
     {
+      name                   = "Allow-8081"
+      priority               = 1041
+      direction              = "Inbound"
+      destination_port_range = "8081"
+    },
+    {
       name                   = "Allow-80"
       priority               = 1045
       direction              = "Inbound"
@@ -58,18 +64,6 @@ nsg_rules = {
       priority               = 1060
       direction              = "Inbound"
       destination_port_range = "5432"
-    },
-    {
-      name                   = "Allow-5000"
-      priority               = 1061
-      direction              = "Inbound"
-      destination_port_range = "5000"
-    },
-    {
-      name                   = "Allow-5001"
-      priority               = 1062
-      direction              = "Inbound"
-      destination_port_range = "5001"
     }
   ]
 }
