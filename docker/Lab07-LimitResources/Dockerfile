@@ -1,0 +1,5 @@
+FROM alpine
+
+RUN apk add --no-cache stress-ng
+
+ENTRYPOINT ["stress-ng"]
