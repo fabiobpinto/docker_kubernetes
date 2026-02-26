@@ -41,3 +41,4 @@ ansible/roles/docker/files/admin_real
 
 # Docker
 docker/Lab05-Dockerfile-Advanced/app/node_modules
+.env
