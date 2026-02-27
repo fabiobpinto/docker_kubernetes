@@ -60,6 +60,12 @@ nsg_rules = {
       destination_port_range = "3000"
     },
     {
+      name                   = "Allow-5010"
+      priority               = 1051
+      direction              = "Inbound"
+      destination_port_range = "5010"
+    },
+    {
       name                   = "Allow-Postgres"
       priority               = 1060
       direction              = "Inbound"
