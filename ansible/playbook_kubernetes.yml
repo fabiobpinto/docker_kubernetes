@@ -1,0 +1,10 @@
+---
+- name: Playbook
+  hosts:
+    - vms_linux
+  roles:
+    - kubernetes
+  gather_facts: false
+  strategy: free
+
+...
