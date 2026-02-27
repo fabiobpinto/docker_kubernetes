@@ -5,4 +5,3 @@ packages_required:
   - git
   - vim
   - bash-completion
-  - kubectl

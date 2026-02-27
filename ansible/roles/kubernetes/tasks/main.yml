@@ -5,23 +5,31 @@
     name: "{{ packages_required }}"
     state: present
 
-- name: add Kubernetes' YUM repository
-  yum_repository:
-   name: Kubernetes
-   description: Kubernetes YUM repository
-   baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-   gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-   gpgcheck: yes
+- name: Add Kubernetes YUM repo
+  ansible.builtin.copy:
+    dest: /etc/yum.repos.d/kubernetes.repo
+    content: |
+      [kubernetes]
+      name=Kubernetes Packages
+      baseurl=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/
+      enabled=1
+      gpgcheck=1
+      gpgkey=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/repodata/repomd.xml.key
+
+- name: Install kubectl
+  ansible.builtin.yum:
+    name: kubectl
+    state: present
 
 - name: install kubelet
   yum:
-     name: kubelet-1.14.0
+     name: kubelet
      state: present
      update_cache: true
 
 - name: install kubeadm
   yum:
-    name: kubeadm-1.14.0
+    name: kubeadm
     state: present
 
 - name: start kubelet
@@ -30,11 +38,16 @@
     enabled: yes
     state: started
 
+- name: Add Helm repo
+  ansible.builtin.yum_repository:
+    name: helm
+    description: Helm repo
+    baseurl: https://baltocdn.com/helm/stable/rpm/
+    gpgcheck: no
 
-- name: install kubectl
-  yum:
-     name: kubectl-1.14.0
-     state: present
-     allow_downgrade: yes
+- name: Install Helm
+  ansible.builtin.yum:
+    name: helm
+    state: present
 
 ...
