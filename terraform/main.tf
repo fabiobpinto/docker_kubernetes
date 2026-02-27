@@ -83,15 +83,3 @@ module "vms_linux" {
     email          = null
   }
 }
-
-
-module "aks" {
-  source = "./modules/aks"
-  rg_name  = var.rg_name
-  location = var.location
-  tags     = var.tags
-
-  for_each = var.aks
-
-  aks      = var.aks
-}
