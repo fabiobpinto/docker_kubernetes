@@ -117,3 +117,14 @@ vms_linux = {
     }
   }
 }
+
+
+aks = {
+  aks01 = {
+    aks_cluster_name = "aks-tier"
+    dns_prefix       = "aksfree"
+    identity_type    = "SystemAssigned"
+    enable_public_ip = true
+    vm_size = "Standard_B2s"
+  }
+}
