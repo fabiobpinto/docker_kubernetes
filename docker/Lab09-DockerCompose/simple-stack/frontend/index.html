@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head><title>Cadastro de Usuários</title></head>
+  <body>
+    <h1>Cadastro</h1>
+    <input type="text" id="name" placeholder="Nome" />
+    <button onclick="sendData()">Enviar</button>
+    <script>
+      function sendData() {
+        const name = document.getElementById('name').value;
+        fetch('http://portal.acme:5010/users', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ name })
+        }).then(() => {
+          document.getElementById('name').value = '';
+        });
+      }
+    </script>
+  </body>
+</html>
