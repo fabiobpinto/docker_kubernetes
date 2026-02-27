@@ -1,2 +1,8 @@
 ---
 # defaults file for kubernetes
+packages_required:
+  - dnf-plugins-core
+  - git
+  - vim
+  - bash-completion
+  - kubectl
