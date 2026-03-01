@@ -38,16 +38,26 @@
     enabled: yes
     state: started
 
-- name: Add Helm repo
-  ansible.builtin.yum_repository:
-    name: helm
-    description: Helm repo
-    baseurl: https://baltocdn.com/helm/stable/rpm/
-    gpgcheck: no
+- name: Download kind binary
+  ansible.builtin.get_url:
+    url: "https://kind.sigs.k8s.io/dl/v0.31.0/kind-linux-amd64"
+    dest: /usr/local/bin/kind
+    mode: '0755'
 
-- name: Install Helm
-  ansible.builtin.yum:
-    name: helm
+- name: Download k9s rpm
+  ansible.builtin.get_url:
+    url: "https://github.com/derailed/k9s/releases/download/v0.50.18/k9s_linux_amd64.rpm"
+    dest: /tmp/k9s.rpm
+    mode: '0644'
+
+- name: Install k9s rpm
+  ansible.builtin.dnf:
+    name: /tmp/k9s.rpm
     state: present
+    disable_gpg_check: true
 
+- name: Remove rpm file
+  ansible.builtin.file:
+    path: /tmp/k9s.rpm
+    state: absent
 ...

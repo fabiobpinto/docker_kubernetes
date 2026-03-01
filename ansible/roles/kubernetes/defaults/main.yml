@@ -5,3 +5,4 @@ packages_required:
   - git
   - vim
   - bash-completion
+  - epel-release
