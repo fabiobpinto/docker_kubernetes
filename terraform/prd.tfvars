@@ -70,7 +70,13 @@ nsg_rules = {
       priority               = 1060
       direction              = "Inbound"
       destination_port_range = "5432"
-    }
+    },
+    {
+      name                   = "Allow-MinikubeDashboard"
+      priority               = 1061
+      direction              = "Inbound"
+      destination_port_range = "43185"
+    },
   ]
 }
 
