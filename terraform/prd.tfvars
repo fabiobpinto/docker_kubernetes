@@ -85,7 +85,7 @@ vms_linux = {
     disable_password_authentication = false
     name                            = "linuxserver"
     computer_name                   = "linuxserver"
-    size                            = "Standard_D2ls_v5"
+    size                            = "Standard_B2as_v2"
     enable_public_ip                = true
 
     source_image_reference = {
@@ -115,16 +115,5 @@ vms_linux = {
       private_ip_address            = "10.0.2.10"
       private_ip_address_allocation = "Static"
     }
-  }
-}
-
-
-aks = {
-  aks01 = {
-    aks_cluster_name = "aks-tier"
-    dns_prefix       = "aksfree"
-    identity_type    = "SystemAssigned"
-    enable_public_ip = true
-    vm_size = "Standard_B2s"
   }
 }
