@@ -19,4 +19,4 @@ spec:
           image: nginx
   selector:
     matchLabels:
-      type: front-end
+      app: myapp
