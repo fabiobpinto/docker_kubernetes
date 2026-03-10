@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db
+  labels:
+    app: db
+spec:
+  containers:
+    - name: postgres
+      image: postgres:15-alpine
+      envFrom:
+        - secretRef:
+            name: db-secrets
+      ports:
+        - containerPort: 5432
+          name: postgres
+
+## Exemplo de como criar dados ocultos usando kubectl, para evitar expor dados sensíveis em arquivos de configuração
+# kubectl create secret generic db-secrets --from-literal=POSTGRES_USER=postgres --from-literal=POSTGRES_PASSWORD=postgres
