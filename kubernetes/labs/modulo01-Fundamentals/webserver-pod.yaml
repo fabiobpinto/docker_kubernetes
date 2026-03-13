@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webserver-pod
+  labels:
+    app: webserver-pod
+spec:
+  initContainers:
+    - name: init-container
+      image: busybox
+      command: ['sh', '-c', 'echo Hello from the init container! && sleep 10']
+  containers:
+    - name: webserver-pod
+      image: nginx
+      ports:
+        - containerPort: 80
