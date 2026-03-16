@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-deployments
+  name: nginx-deployments
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx-deployments
+  strategy:
+    type: RollingUpdate # Estratégia de atualização contínua, onde os pods são atualizados gradualmente, garantindo que haja sempre uma quantidade mínima de pods disponíveis durante a atualização.
+    rollingUpdate:
+      maxUnavailable: 1 #Podemos usar porcentagem, ex: 25%. Indica quantos pods podem ficar indisponíveis durante a atualização.
+      maxSurge: 1       #Podemos usar porcentagem, ex: 25%. Indica quantos pods adicionais podem ser criados durante a atualização.
+    # type: Recreate  # Estratégia de recriação, onde todos os pods são terminados antes que os novos sejam criados. Isso pode causar downtime, mas garante que não haja sobreposição entre as versões antiga e nova dos pods.
+  template:
+    metadata:
+      labels:
+        app: nginx-deployments
+    spec:
+      containers:
+      - image: nginx:1.20
+        name: nginx
+        resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+
+status: {}
