@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: no-node-selector-pod
+spec:
+  containers:
+  - image: nginx
+    name: ngginx
+    resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
+  nodeSelector:
+    hardware: high-end # Tag que foi adicionada ao nó acme-worker.

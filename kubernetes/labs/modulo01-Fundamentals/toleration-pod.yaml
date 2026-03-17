@@ -1,0 +1,40 @@
+#####################################
+# Foi executado o comando "kubectl taint nodes acme-worker2 key=value:NoSchedule" antes
+#####################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: no-toleration-pod
+spec:
+  containers:
+    - image: nginx
+      name: app-pod-test
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: toleration-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
+  tolerations:
+    - key: "key"
+      operator: "Equal"
+      value: "value"
+      effect: "NoSchedule"

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx
+  name: manual-pod
+spec:
+  containers:
+    - image: nginx
+      name: nginx
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
+  nodeName: acme-worker2 # Especifica o nó onde o pod deve ser agendado. Substitua "acme-worker2" pelo nome do nó desejado.

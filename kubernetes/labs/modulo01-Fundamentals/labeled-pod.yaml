@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels: # As labels são pares chave-valor que podem ser usados para organizar e selecionar objetos no Kubernetes. Elas são usadas para identificar atributos de um objeto, como o ambiente (produção, desenvolvimento, teste), o aplicativo ao qual pertence, a versão, etc. No exemplo acima, temos duas labels: "app" com o valor "myapp" e "env" com o valor "production". Essas labels podem ser usadas para selecionar este pod em consultas ou para aplicar políticas específicas a ele.
+    app: myapp
+    env: production
+  name: app-pod-prd
+spec:
+  containers:
+  - image: nginx
+    name: app-pod-prd
+    resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels: # As labels são pares chave-valor que podem ser usados para organizar e selecionar objetos no Kubernetes. Elas são usadas para identificar atributos de um objeto, como o ambiente (produção, desenvolvimento, teste), o aplicativo ao qual pertence, a versão, etc. No exemplo acima, temos duas labels: "app" com o valor "myapp" e "env" com o valor "production". Essas labels podem ser usadas para selecionar este pod em consultas ou para aplicar políticas específicas a ele.
+    app: myapp
+    env: test
+  name: app-pod-test
+spec:
+  containers:
+  - image: nginx
+    name: app-pod-test
+    resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
