@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: static-pod
+  name: static-pod
+spec:
+  containers:
+    - image: nginx
+      name: static-pod
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+
+# Deve ser copiado para o diretório /etc/kubernetes/manifests dentro do node para ser criado como static pod.
+# O kubelet irá monitorar esse diretório e criar o pod automaticamente dentro do node.
+
+# Comando para copiar o arquivo para o diretório de manifests dentro do container do node worker:
+# docker cp static-pod.yaml acme-worker:/etc/kubernetes/manifests/
+# Após a cópia, o kubelet irá criar o pod automaticamente.
+
+# Para remover o Static Pod, basta deletar o arquivo YAML dentro do contêiner.
+# docker exec -it acme-worker rm /etc/kubernetes/manifests/static-pod.yaml
