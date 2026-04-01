@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-lb-aks
+  name: nginx-lb-aks
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-lb-aks
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx-lb-aks
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources: {}
+status: {}
