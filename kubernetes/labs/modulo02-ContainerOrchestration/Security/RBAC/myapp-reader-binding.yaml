@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: myapp-reader-binding
+  namespace: myapp
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: myapp-reader
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: developer
+
+# k create rolebinding myapp-reader-binding --role=myapp-reader --user=developer --namespace=myapp --dry-run=client -o yaml > myapp-reader-binding.yaml

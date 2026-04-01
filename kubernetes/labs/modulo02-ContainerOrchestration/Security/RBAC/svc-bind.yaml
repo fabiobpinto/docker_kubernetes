@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: list-pods-binding
+  namespace: local-path-storage
+subjects:
+  - kind: ServiceAccount
+    name: test-sa
+    namespace: default
+roleRef:
+  kind: Role
+  name: list-pods-role
+  apiGroup: rbac.authorization.k8s.io
+
+# k create rolebinding list-pods-binding --role=list-pods-role --serviceaccount=local-path-storage:svc-node-admin --dry-run=client -o yaml > list-pods-binding.yaml

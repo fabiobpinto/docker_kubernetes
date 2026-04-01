@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: insecure-pod
+  name: insecure-pod
+spec:
+  containers:
+    - name: insecure-pod
+      image: busybox
+      resources:
+        {
+          limits: { cpu: "100m", memory: "128Mi" },
+          requests: { cpu: "50m", memory: "64Mi" },
+        }
+      command: ["sh", "-c", "sleep 3600"]
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
+  volumes:
+    - name: shared-data
+      emptyDir: {}

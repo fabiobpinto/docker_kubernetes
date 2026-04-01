@@ -1,0 +1,63 @@
+# Baixar imagem nginx
+docker pull nginx
+
+# Listar as imagens
+docker images
+
+# Executar o container
+docker run -d --name webserver -p 8080:80 webserver
+
+# Listar container ativo
+docler ps
+
+# Acessar o container
+docker exec -it webserver bash
+
+# Parar o container
+docker stop webserver
+
+# Remover o container
+docker rm webserver
+
+# Remover image
+docker image rm nome_imagem/ouID (--force se necessário)
+docker rmi -f 341bf0f3ce6c
+
+
+# Criar uma imagem
+docker build -t fast-app .
+
+# Rodar a imagem
+docker run -d --name app -p 8080:8080 fastapi-app
+
+
+# Verificar os logs do Docker
+docker logs $(docker ps -q --filter ancestor=fastapi-app:latest)
+docker logs 5c552bb8735e
+
+# Remover containers parados
+docker container prune
+
+
+# Executar o docker-compose
+docker-compose up -d
+
+# Parar o containers docker-compose
+docker-compose down -v ( -v por causa dos volumes)
+
+#Ver containers do docker-compose
+docker-compose ps
+
+
+# Ver logs do compose
+docker-compose logs -f node-app (nome do serviço no arquivo do docker-compose)
+
+# Todas não usadas
+docker image prune -a
+
+# Tudo não usado
+docker system prune -a
+
+
+4. Acompanhar status de saúde
+	docker inspect nginx_hc | jq '.[0].State.Health'
