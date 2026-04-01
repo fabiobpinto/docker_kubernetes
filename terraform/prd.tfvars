@@ -72,11 +72,29 @@ nsg_rules = {
       destination_port_range = "5432"
     },
     {
-      name                   = "Allow-MinikubeDashboard"
+      name                   = "Allow-30004"
       priority               = 1061
       direction              = "Inbound"
-      destination_port_range = "43185"
+      destination_port_range = "30004"
     },
+    {
+      name                   = "Allow-30005"
+      priority               = 1062
+      direction              = "Inbound"
+      destination_port_range = "30005"
+    },
+    {
+      name                   = "Allow-30006"
+      priority               = 1063
+      direction              = "Inbound"
+      destination_port_range = "30006"
+    },
+    {
+      name                   = "Allow-MinikubeDashboard"
+      priority               = 1070
+      direction              = "Inbound"
+      destination_port_range = "43185"
+    }
   ]
 }
 
