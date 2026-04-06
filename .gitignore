@@ -46,3 +46,5 @@ docker/Lab05-Dockerfile-Advanced/app/node_modules
 # Certificates
 *.key
 *.crt
+kubernetes/labs/modulo02-ContainerOrchestration/Istio/istio-1.29.1
+kubernetes/labs/modulo02-ContainerOrchestration/Istio/istio

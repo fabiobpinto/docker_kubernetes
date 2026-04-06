@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-hostpath
+spec:
+  containers:
+    - image: nginx
+      name: pod-hostpath
+      resources: {}
+      volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: hostpath-volume
+  volumes:
+    - name: hostpath-volume
+      persistentVolumeClaim:
+        claimName: hostpath-pvc

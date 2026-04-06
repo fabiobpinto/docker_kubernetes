@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hostpath-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce # Leitura e escrita por um único nó
+    # - ReadOnlyMany  # Leitura por múltiplos nós
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: hostpath-pv # Especifica o PV a ser usado, garantindo que o PVC se vincule ao PV correto
