@@ -94,6 +94,24 @@ nsg_rules = {
       priority               = 1070
       direction              = "Inbound"
       destination_port_range = "43185"
+    },
+    {
+      name                   = "Allow-Prometheus"
+      priority               = 1080
+      direction              = "Inbound"
+      destination_port_range = "9090"
+    },
+    {
+      name                   = "Allow-Grafana"
+      priority               = 1090
+      direction              = "Inbound"
+      destination_port_range = "3000"
+    },
+    {
+      name                   = "Allow-AlertManager"
+      priority               = 1100
+      direction              = "Inbound"
+      destination_port_range = "9093"
     }
   ]
 }
