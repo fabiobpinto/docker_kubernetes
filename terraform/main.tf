@@ -83,3 +83,39 @@ module "vms_linux" {
     email          = null
   }
 }
+
+# ########################################################################
+# ### Storage Account
+# ########################################################################
+# module "storage_account" {
+#   source   = "./modules/storage_account"
+#   rg_name  = module.rg.rg_name
+#   location = module.rg.location
+#   tags     = var.tags
+
+#   for_each = var.storage_account
+
+#   stg_name                 = each.value.stg_name
+#   account_tier             = each.value.account_tier
+#   account_replication_type = each.value.account_replication_type
+# }
+
+# module "storage_file_share" {
+#   source = "./modules/storage_file_share"
+
+#   for_each = var.storage_account
+
+#   storage_account_id = module.storage_account[each.key].stg_id
+#   file_shares        = each.value.file_shares
+
+# }
+
+# ########################################################################
+# ### Storage Account - Disable Secure Transfer Requirement
+# ########################################################################
+# resource "azurerm_storage_account_network_rules" "storage_network_rules" {
+#   for_each = var.storage_account
+
+#   storage_account_id = module.storage_account[each.key].stg_id
+#   default_action     = "Allow"
+# }

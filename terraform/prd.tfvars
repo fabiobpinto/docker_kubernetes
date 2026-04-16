@@ -159,3 +159,22 @@ vms_linux = {
     }
   }
 }
+
+########################################################################
+# Storage Account
+########################################################################
+
+storage_account = {
+  stgprd = {
+    stg_name                 = "stgprdfabiobp"
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+
+    file_shares = {
+      share1 = {
+        quota = 50
+      }
+    }
+
+  }
+}

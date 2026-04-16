@@ -100,3 +100,15 @@ variable "vms_linux" {
   }))
   description = "Configuration object for the Linux virtual machine."
 }
+
+variable "storage_account" {
+  type = map(object({
+    stg_name                 = string
+    account_tier             = string
+    account_replication_type = string
+
+    file_shares = optional(map(object({
+      quota = number
+    })), {})
+  }))
+}
