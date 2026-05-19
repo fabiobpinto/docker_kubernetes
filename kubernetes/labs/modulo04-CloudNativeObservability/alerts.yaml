@@ -1,0 +1,15 @@
+alertmanager:
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      receiver: demo-webhook
+      group_wait: 5s
+      group_interval: 10s
+      repeat_interval: 1h
+    receivers:
+      - name: "null"
+      - name: demo-webhook
+        webhook_configs:
+          - url: "https://webhook.site/6d1b6c5b-e19b-4200-b277-7fdc514146f8"
+            send_resolved: true

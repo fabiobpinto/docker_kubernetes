@@ -1,0 +1,105 @@
+
+Instalar o Helm
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+  Verifique se a instalação foi bem-sucedida:
+    helm version
+
+Instalando o Prometheus e Grafana com Helm
+
+  Adicionando os repositórios Helm
+    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+    helm repo update
+
+  Criando o namespace
+    kubectl create namespace monitoring
+
+  Instalando o kube-prometheus-stack
+    helm install prometheus prometheus-community/kube-prometheus-stack \
+    --namespace monitoring \
+    --set prometheus.service.type=NodePort \
+    --set prometheus.service.nodePort=30090 \
+    --set grafana.service.type=NodePort \
+    --set grafana.service.nodePort=30080 \
+    --set alertmanager.service.type=NodePort \
+    --set alertmanager.service.nodePort=30070
+
+Get Grafana 'admin' user password by running:
+
+  kubectl --namespace monitoring get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+
+
+  Verificar os componentes do Prometheus.
+    kubectl -n monitoring get pods
+
+  Acessando os serviços:
+    - Prometheus: http://localhost:9090
+    - Grafana: http://localhost:3000 (usuário: admin, senha padrão: prom-operator)
+    - Alertmanager: http://localhost:9093
+
+
+Utilizando o Grafana
+
+  Acessar o Grafana
+    http://localhost:3000 (usuário: admin, senha padrão: prom-operator)
+
+  Explorando os painéis pré-cnfigurados
+
+  Este painel fornece uma visão geral da utilização de recursos para todo o seu cluster.
+    Monitoramento da utilização do cluster com “Kubernetes / Compute Resources / Cluster”
+
+  Os dados coletados pelo Node-Exporter são fornecidos por este painel.
+    Visualizando o consumo de recursos de um nó com “Node Exporter / Nodes”
+
+  Este painel mostra as solicitações de recursos, limites, cotas e utilização para Pods individuais.
+    Visualizando o consumo de recursos de pods individuais com “Kubernetes / Compute Resources / Pod”
+
+Configurando alertas com o Alertmanager
+
+  O Alertmanager do Prometheus envia notificações quando as métricas acionam alertas.
+  No Kube-Prometheus-Stack, ele é configurado automaticamente ao implantar o chart com o Helm.
+
+  Para testes, use um servidor de webhook local ou um serviço online como o Webhook.site.
+
+    Acesse Webhook.site, copie a URL gerada e atualize seu alerts.yaml para apontar para essa URL no campo webhook_configs.
+
+  Prepare o arquivo alerts.yaml.
+  Exemplo que envia todos os alertas para uma URL de webhook:
+
+    alertmanager:
+      config:
+        global:
+          resolve_timeout: 5m
+        route:
+          receiver: demo-webhook
+          group_wait: 5s
+          group_interval: 10s
+          repeat_interval: 1h
+        receivers:
+          - name: "null"
+          - name: demo-webhook
+            webhook_configs:
+              - url:
+                send_resolved: true
+
+  Execute o seguinte comando para reimplantar a stack do Prometheus e aplicar suas configurações do Alertmanager:
+    helm upgrade --reuse-values \
+    -f alerts.yaml \
+    -n monitoring \
+    prometheus prometheus-community/kube-prometheus-stack
+
+  Não se preocupe – você não perderá nenhum dos seus dados existentes. O comando executa uma atualização in-loco da sua implantação.
+
+  Pode levar alguns minutos para o Alertmanager recarregar sua configuração após a conclusão da implantação.
+  Você começará a receber solicitações para sua URL de webhook, conforme os alertas são disparados.
+
+  Execute o seguinte comando para simular o acionamento de um alerta básico de um serviço do Kubernetes em um namespace específico:
+    curl -H 'Content-Type: application/json' -d '[{"labels":{"alertname":"alert-demo","namespace":"demo","service":"demo"}}]' http://127.0.0.1:9093/api/v2/alerts
+
+  Após alguns momentos, você deve receber uma solicitação para sua URL de webhook. O corpo da solicitação descreverá os detalhes do alerta.
+
+  Validando no Alertmanager UI
+    Acesse o Alertmanager em http://localhost:9093
+
+  Validando no Webhook.site
+    http://Webhook.site
