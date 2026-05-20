@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: java-api-pod
+  labels:
+    app: java-api
+spec:
+  containers:
+    - name: java-api
+      image: iesodias/java-api:latest
+      ports:
+        - containerPort: 8081
+      resources: {}
