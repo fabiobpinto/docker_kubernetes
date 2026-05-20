@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-api-limited
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-api-limited
+  template:
+    metadata:
+      labels:
+        app: java-api-limited
+    spec:
+      containers:
+        - name: java-api-limited
+          image: iesodias/java-api:latest
+          ports:
+            - containerPort: 8081
+          resources:
+            limits: # O máximo que a aplicação pode consumir
+              memory: "256Mi"
+              cpu: "200m" # É 2/10 de um núcleo de CPU
+            requests: # O quanto a aplicação precisa para funcionar, o mínimo necessário
+              memory: "128Mi"
+              cpu: "100m" # É 1/10 de um núcleo de CPU

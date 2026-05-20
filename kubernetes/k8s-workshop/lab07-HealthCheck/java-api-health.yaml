@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-api-health
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-api-health
+  template:
+    metadata:
+      labels:
+        app: java-api-health
+    spec:
+      containers:
+        - name: java-api-health
+          image: iesodias/java-api:latest
+          ports:
+            - containerPort: 8081
+          livenessProbe: # Verifica se o container está trabalhando corretamente
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 10 # Tempo para o container iniciar antes de começar a verificar
+            periodSeconds: 5 # Intervalo entre as verificações
+            failureThreshold: 3 # Número de falhas antes de considerar o container como não saudável
+          readinessProbe: # Verifica se o container subiu corretamente, Colocar os valores diferentes do livenessProbe
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 3
+            failureThreshold: 2
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"

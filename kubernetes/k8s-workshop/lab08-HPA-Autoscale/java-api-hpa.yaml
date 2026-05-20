@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-api-hpa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-api-hpa
+  template:
+    metadata:
+      labels:
+        app: java-api-hpa
+    spec:
+      containers:
+        - name: java-api
+          image: iesodias/java-api:latest
+          ports:
+            - containerPort: 8081
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+        - name: stress
+          image: progrium/stress:latest
+          args: ["--cpu", "2"]
+          resources:
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: java-api-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: java-api-hpa
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
