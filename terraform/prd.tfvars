@@ -54,16 +54,10 @@ nsg_rules = {
       destination_port_range = "80"
     },
     {
-      name                   = "Allow-3000"
-      priority               = 1050
+      name                   = "Allow-HTTPS"
+      priority               = 1046
       direction              = "Inbound"
-      destination_port_range = "3000"
-    },
-    {
-      name                   = "Allow-5010"
-      priority               = 1051
-      direction              = "Inbound"
-      destination_port_range = "5010"
+      destination_port_range = "443"
     },
     {
       name                   = "Allow-Postgres"
@@ -157,6 +151,42 @@ vms_linux = {
       private_ip_address            = "10.0.2.10"
       private_ip_address_allocation = "Static"
     }
+    # },
+    # foreman = {
+    #   admin_username                  = "adminfabio"
+    #   disable_password_authentication = false
+    #   name                            = "foreman"
+    #   computer_name                   = "foreman"
+    #   size                            = "Standard_B2as_v2"
+    #   enable_public_ip                = true
+
+    #   source_image_reference = {
+    #     publisher = "oracle"
+    #     offer     = "oracle-linux"
+    #     sku       = "ol97-lvm-gen2"
+    #     version   = "9.7.2"
+    #   }
+
+    #   plan = {
+    #     publisher = "oracle"
+    #     product   = "oracle-linux"
+    #     name      = "9.7.2"
+    #   }
+
+
+    #   os_disk = {
+    #     caching              = "ReadWrite"
+    #     storage_account_type = "StandardSSD_LRS"
+    #     disk_size_gb         = 50
+    #   }
+
+    #   nic_ip_configuration_name = "primary"
+    #   subnet_name               = "snet-prd-linux"
+
+    #   nic_info = {
+    #     private_ip_address            = "10.0.2.20"
+    #     private_ip_address_allocation = "Static"
+    #   }
   }
 }
 
