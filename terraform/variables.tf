@@ -61,7 +61,7 @@ variable "admin_username" {
   description = "The admin username for the Linux virtual machine."
 }
 
-variable "admin_pass" {
+variable "admin_password" {
   type        = string
   description = "The admin password for the Linux virtual machine."
 }

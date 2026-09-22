@@ -42,10 +42,10 @@ nsg_rules = {
       destination_port_range = "8080"
     },
     {
-      name                   = "Allow-8081"
-      priority               = 1041
+      name                   = "Allow-9000"
+      priority               = 1042
       direction              = "Inbound"
-      destination_port_range = "8081"
+      destination_port_range = "9000"
     },
     {
       name                   = "Allow-80"

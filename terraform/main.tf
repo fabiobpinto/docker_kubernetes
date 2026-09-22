@@ -53,7 +53,7 @@ module "vms_linux" {
 
   vm_linux = {
     admin_username                  = each.value.admin_username
-    admin_pass                      = var.admin_pass
+    admin_pass                      = var.admin_password
     disable_password_authentication = each.value.disable_password_authentication
     vm_name                         = each.value.name
     computer_name                   = each.value.computer_name
