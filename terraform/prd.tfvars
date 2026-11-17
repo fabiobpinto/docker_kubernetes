@@ -1,3 +1,5 @@
+subscription_id = "ff882453-92d9-4cdd-a627-966b0727aeec"
+
 rg_name  = "rg-prd-docker"
 location = "East US"
 ########################################################################
@@ -151,60 +153,63 @@ vms_linux = {
       private_ip_address            = "10.0.2.10"
       private_ip_address_allocation = "Static"
     }
-    # },
-    # foreman = {
-    #   admin_username                  = "adminfabio"
-    #   disable_password_authentication = false
-    #   name                            = "foreman"
-    #   computer_name                   = "foreman"
-    #   size                            = "Standard_B2as_v2"
-    #   enable_public_ip                = true
+  },
+  rh8 = {
+    admin_username                  = "adminfabio"
+    disable_password_authentication = false
+    name                            = "rh8"
+    computer_name                   = "rh8"
+    size                            = "Standard_B2as_v2"
+    enable_public_ip                = true
 
-    #   source_image_reference = {
-    #     publisher = "oracle"
-    #     offer     = "oracle-linux"
-    #     sku       = "ol97-lvm-gen2"
-    #     version   = "9.7.2"
-    #   }
-
-    #   plan = {
-    #     publisher = "oracle"
-    #     product   = "oracle-linux"
-    #     name      = "9.7.2"
-    #   }
-
-
-    #   os_disk = {
-    #     caching              = "ReadWrite"
-    #     storage_account_type = "StandardSSD_LRS"
-    #     disk_size_gb         = 50
-    #   }
-
-    #   nic_ip_configuration_name = "primary"
-    #   subnet_name               = "snet-prd-linux"
-
-    #   nic_info = {
-    #     private_ip_address            = "10.0.2.20"
-    #     private_ip_address_allocation = "Static"
-    #   }
-  }
-}
-
-########################################################################
-# Storage Account
-########################################################################
-
-storage_account = {
-  stgprd = {
-    stg_name                 = "stgprdfabiobp"
-    account_tier             = "Standard"
-    account_replication_type = "LRS"
-
-    file_shares = {
-      share1 = {
-        quota = 50
-      }
+    source_image_reference = {
+      publisher = "RedHat"
+      offer     = "RHEL"
+      sku       = "8-lvm-gen2"
+      version   = "latest"
     }
 
-  }
+    os_disk = {
+      caching              = "ReadWrite"
+      storage_account_type = "StandardSSD_LRS"
+      disk_size_gb         = 64
+    }
+
+    nic_ip_configuration_name = "primary"
+    subnet_name               = "snet-prd-linux"
+
+    nic_info = {
+      private_ip_address            = "10.0.2.20"
+      private_ip_address_allocation = "Static"
+    }
+  },
+  rh9 = {
+    admin_username                  = "adminfabio"
+    disable_password_authentication = false
+    name                            = "rh9"
+    computer_name                   = "rh9"
+    size                            = "Standard_B2as_v2"
+    enable_public_ip                = true
+
+    source_image_reference = {
+      publisher = "RedHat"
+      offer     = "RHEL"
+      sku       = "9-lvm-gen2"
+      version   = "latest"
+    }
+
+    os_disk = {
+      caching              = "ReadWrite"
+      storage_account_type = "StandardSSD_LRS"
+      disk_size_gb         = 64
+    }
+
+    nic_ip_configuration_name = "primary"
+    subnet_name               = "snet-prd-linux"
+
+    nic_info = {
+      private_ip_address            = "10.0.2.30"
+      private_ip_address_allocation = "Static"
+    }
+  },
 }
